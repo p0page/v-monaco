@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <div class="control-bar">
       <span>
         <label class="control-label" for="theme">Theme</label>
