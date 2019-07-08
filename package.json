@@ -1,8 +1,7 @@
 {
-  "name": "vue-monaco",
+  "name": "v-monaco",
   "version": "0.1.0",
-  "private": true,
-  "main": "dist/vue-monaco.umd.min.js",
+  "main": "dist/v-monaco.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "prepublishOnly": "npm run build",

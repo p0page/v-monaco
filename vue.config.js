@@ -8,11 +8,15 @@ module.exports = {
       .add('./example/main.js')
       .end()
 
-    if (!process.env.IS_LIB) {
+    if(process.env.IS_LIB) {
+      config.externals({'monaco-editor': 'monaco-editor'})
+        .end()
+    } else {
       config.plugin('monaco-editor')
-      .use(MonacoEditorWebpackPlugin, [{
-        languages: ['javascript', 'css', 'html', 'typescript']
-      }])
+        .use(MonacoEditorWebpackPlugin, [{
+          languages: ['javascript', 'css', 'html', 'typescript']
+        }])
+        .end()
     }
   }
 }
