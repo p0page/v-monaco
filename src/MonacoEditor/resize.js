@@ -1,33 +1,29 @@
 import ResizeObserver from 'resize-observer-polyfill'
 
-export default {
-  data() {
-    return {
-      _waiting: false,
-      _observer: null
-    }
-  },
-
-  mounted () {
-    this._observer = new ResizeObserver(this._resize)
-    this._observer.observe(this.$el)
-  },
-
-  beforeDestroy () {
-    if(this.observer) {
-      this._observer.unobserve(this.$el)
-      this._observer.disconnect()
-      this._observer = null
-    }
-  },
-
-  methods: {
-    _resize (entries) {
-      const [{ contentRect: { width, height } }] = entries
-      this.$emit('resize', {
-        width,
-        height
-      })
+const resizeHandler = entries => {
+  for (const entry of entries) {
+    const listeners = entry.target.__resizeListeners__ || [];
+    if (listeners.length) {
+      listeners.forEach(fn => {
+        fn();
+      });
     }
   }
-}
+};
+
+export const onResize = (element, fn) => {
+  if (!element.__resizeListeners__) {
+    element.__resizeListeners__ = [];
+    element.__ro__ = new ResizeObserver(resizeHandler);
+    element.__ro__.observe(element);
+  }
+  element.__resizeListeners__.push(fn);
+};
+
+export const offResize = (element, fn) => {
+  if (!element || !element.__resizeListeners__) return;
+  element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
+  if (!element.__resizeListeners__.length) {
+    element.__ro__.disconnect();
+  }
+};
