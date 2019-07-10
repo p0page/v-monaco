@@ -22,6 +22,7 @@
       :theme="theme"
       :height="600"
       auto-focus
+      :options="{ automaticLayout: true }"
     />
 
   </div>

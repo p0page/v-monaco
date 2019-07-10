@@ -1,5 +1,4 @@
 import * as monaco from 'monaco-editor';
-import { onResize, offResize } from './resize'
 
 export default {
   name: 'MonacoEditor',
@@ -88,12 +87,10 @@ export default {
 
   mounted () {
     this.init()
-    onResize(this.$el, this.handleResize)
   },
 
   beforeDestroy() {
     this.editor && this.editor.dispose()
-    offResize(this.$el, this.handleResize)
   },
 
   methods: {
